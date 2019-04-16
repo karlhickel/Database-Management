@@ -9,8 +9,11 @@ count = -1
 table1 = []
 
 
+rowNumber = int(input("How many rows of data would you like to print?"));
 
-while count <= 100:
+
+
+while count < rowNumber:
     count += 1
     name = (fake.name())
     job = (fake.job())
@@ -30,9 +33,12 @@ i = 0
 for i in table1:
     print(i)
 
+print("What is the name of your file that you'd like to output to?")
+fileName = raw_input();
+
 
 my_df = pd.DataFrame(table1)
-my_df.to_csv('out.csv', index=False, header=False)
+my_df.to_csv(fileName + '.csv', index=False, header=False)
 print my_df
 
 
