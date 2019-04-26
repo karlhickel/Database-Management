@@ -1,0 +1,111 @@
+#1
+SELECT CategoryName, Description
+FROM Categories;
+
+#2
+SELECT CustomerID, ContactName, CompanyName
+FROM Customers
+WHERE City = 'London';
+
+#3.
+SELECT *
+FROM Suppliers
+WHERE Fax IS NOT NULL AND (ContactTitle = 'Sales Representative' or ContactTitle = 'Marketing Manager');
+
+#4.
+SELECT CustomerID
+FROM Orders
+WHERE '1997/1/1' < '1998/1/1' AND Freight<100;
+
+#5.
+SELECT CompanyName, ContactName
+FROM Customers
+WHERE Country = 'Mexico' OR Country = 'Sweden' OR Country = 'Germany';
+
+#6.
+SELECT COUNT(Discontinued = TRUE)
+FROM Products;
+
+#7.
+SELECT CategoryName, Description
+FROM Categories
+WHERE CategoryName LIKE 'Co%';
+
+#8.
+SELECT CompanyName, City, Country, PostalCode
+FROM Suppliers
+WHERE Address LIKE '%rue%'
+ORDER BY CompanyName ASC;
+
+
+#9.
+SELECT ProductID,COUNT(Quantity)
+FROM OrderDetails
+GROUP BY ProductID;
+
+#10.
+SELECT Customers.ContactName , Customers.Address
+FROM Customers, Orders
+WHERE Customers.CustomerID = Orders.CustomerID AND Orders.ShipVia = 1
+GROUP BY Customers.ContactName, Customers.Address;
+
+#11.
+SELECT CompanyName, ContactName, ContactTitle, Region
+FROM Suppliers
+WHERE Region IS NOT NULL;
+
+#12.
+SELECT ProductName
+FROM Products
+WHERE CategoryID = 2;
+
+#13.
+SELECT ContactName
+FROM Customers
+WHERE CustomerID NOT IN (SELECT CustomerID FROM Orders);
+
+#14.
+INSERT INTO Shippers(CompanyName, Phone) VALUES ('Amazon','(907)737-2232');
+
+#15.
+UPDATE Shippers SET CompanyName = 'Amazon Prime Shipping'
+WHERE CompanyName = 'Amazon';
+
+#16.
+
+SELECT Shippers.CompanyName, Round(Sum(Orders.Freight),2) FreightTotal
+FROM Shippers, Orders
+WHERE Shippers.ShipperID = Orders.ShipVia
+GROUP BY Shippers.CompanyName;
+
+#17.
+SELECT concat(LastName,',',FirstName) DisplayName
+FROM Employees;
+
+#18.
+INSERT INTO Customers(CustomerID, CompanyName, ContactName)
+VALUES ('KARLH', 'Chapman And Sons', 'Karl Hickel');
+
+INSERT INTO Orders(CustomerID)
+VALUES('KARLH');
+
+INSERT INTO OrderDetails
+VALUES((SELECT OrderID FROM Orders WHERE CustomerID = 'KARLH'),
+       6,15,7,2);
+
+#19
+DELETE from OrderDetails
+WHERE (SELECT OrderID FROM Orders WHERE CustomerID = 'KARLH');
+
+DELETE FROM Orders
+WHERE CustomerID = 'KARLH';
+
+DELETE FROM Customers
+WHERE CustomerID = 'KARLH';
+
+
+#20.
+
+SELECT ProductName, UnitsInStock TotalUnits
+FROM Products
+WHERE UnitsInStock>= 100;
